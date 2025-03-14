@@ -1,0 +1,163 @@
+/* Основной стиль шапки */
+.main-nav {
+    display: flex;
+    justify-content: space-between; /* Распределяем элементы по краям */
+    align-items: center; /* Центрируем элементы по вертикали */
+    background: linear-gradient(90deg, #5a0002, #3b1e47);
+    color: white;
+    padding: 20px 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Легкая тень для объема */
+    border-radius: 30px;
+}
+
+.main-foot {
+    background: linear-gradient(90deg, #5a0002, #3b1e47);
+}
+
+/* Общие стили для шапки и футера */
+header, footer {
+    background-color: #f8f8f8; /* Светлый фон */
+    color: #333; /* Тёмный текст */
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    background-color: #222; /* Тёмный фон для футера */
+    color: #fff; /* Белый текст */
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+footer .main-foot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+footer .footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+footer .footer-content img {
+    margin-right: 10px;
+}
+
+footer button {
+    background-color: #19aee7; /* Зеленая кнопка */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+footer button:hover {
+    background-color: #45a049; /* Изменение цвета при наведении */
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+}
+
+
+.telegram-button {
+    background-color: #0088cc; /* Цвет фона в стиле Telegram */
+    border: none;
+    border-radius: 50%; /* Делает кнопку круглой */
+    padding: 20px; /* Размер кнопки */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Эффект при наведении */
+}
+
+.telegram-button:hover {
+    transform: scale(1.1); /* Увеличение кнопки при наведении */
+}
+
+.telegram-icon {
+    width: 30px; /* Размер иконки */
+    height: 30px; /* Размер иконки */
+    object-fit: cover;
+}
+
+
+
+/* Логотип с названием */
+.logo-nav-button {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+}
+
+.logo-nav-button h1 {
+    font-size: 32px;
+    margin-right: 15px;
+    font-family: 'Arial', sans-serif;
+}
+
+.logo-nav-button img {
+    width: 65px;
+    height: 65px;
+}
+
+/* Подпись под логотипом */
+.main-nav p {
+    font-size: 25px;
+    margin-left: 20px;
+    font-style: italic;
+    color: #ddd; /* Светлый цвет для подписи */
+}
+
+/* Меню с ссылками */
+ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul li {
+    margin-right: 30px; /* Расстояние между ссылками */
+    position: relative; /* Для добавления подчеркивания */
+}
+
+ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: color 0.3s ease; /* Плавное изменение цвета */
+}
+
+ul li a:hover {
+    color: #f39c12; /* Золотистый цвет при наведении */
+}
+
+/* Подчеркивание ссылок */
+ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: #f39c12;
+    bottom: -5px;
+    left: 0;
+    transition: width 0.3s ease; /* Плавное расширение подчеркивания */
+}
+
+ul li a:hover::after {
+    width: 100%; /* При наведении подчеркивание расширяется */
+}

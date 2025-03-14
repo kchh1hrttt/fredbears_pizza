@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}test page{% endblock %}
+
+{% block content %}
+
+<style>
+    /* Основной контейнер для всех блоков меню */
+.menu-block {
+    display: flex;
+    flex-wrap: wrap; /* Автоматический перенос элементов */
+    gap: 20px;
+    justify-content: center; /* Центрируем блоки по горизонтали */
+    margin: 20px;
+}
+
+/* Каждый блок с пиццей */
+.item {
+    display: flex;
+    flex-direction: column; /* Элементы внутри блока будут располагаться по вертикали */
+    align-items: center; /* Центрируем все элементы по горизонтали */
+    background-color: #f5f5f5; /* Светлый фон */
+    width: 480px; /* Уменьшаем ширину блока */
+    height: auto; /* Высота будет зависеть от содержимого */
+    border: 2px solid #ddd; /* Легкая граница */
+    border-radius: 10px; /* Закругленные углы */
+    padding: 15px;
+    box-sizing: border-box; /* Чтобы padding не увеличивал размер блока */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Тень для создания объема */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавные эффекты при наведении */
+}
+
+/* Эффект при наведении на блок */
+.item:hover {
+    transform: translateY(-5px); /* Поднимаем блок при наведении */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Усиливаем тень при наведении */
+    cursor: pointer;
+}
+
+/* Блок для изображения */
+.item-image {
+    width: 100%;
+    height: 200px; /* Фиксированная высота для изображения */
+    overflow: hidden;
+    margin-bottom: 15px; /* Отступ между изображением и текстом */
+    border-radius: 10px; /* Закругленные углы изображения */
+}
+
+.item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Обрезаем изображение, чтобы оно не выходило за пределы */
+}
+
+/* Стиль для текста */
+.item-name, .item-description, .item-price {
+    text-align: center; /* Центрируем текст */
+    margin-bottom: 10px; /* Отступ между текстовыми блоками */
+    font-family: 'Arial', sans-serif;
+    color: #333; /* Темно-серый цвет текста */
+}
+
+/* Специальное оформление для названия пиццы */
+.item-name {
+    font-size: 20px;
+    font-weight: bold; /* Сделаем название пиццы жирным */
+    color: #2d2d2d; /* Более темный цвет для названия */
+}
+
+/* Описание и цена пиццы */
+.item-description {
+    font-size: 14px;
+    color: #777; /* Светло-серый цвет для описания */
+}
+
+/* Стиль для цены */
+.item-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #f39c12; /* Золотистый цвет для цены */
+}
+ 
+    
+</style>
+
+<div class="menu-block">
+{% for pizza in pizzas %}
+    <div class="item" onclick="window.location.href='/add_to_cart/Пицца Маргарита'">
+        <div class="item-name">{{pizza.name}}</div>
+        <div class="item-description">{{pizza.description}}</div>
+        <div class="item-price">{{pizza.price}}</div>
+        <div class="image-container">
+            <div class="item-image">
+                <img src="{{ url_for('static', filename=pizza.image) }}">
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+{% endblock %}

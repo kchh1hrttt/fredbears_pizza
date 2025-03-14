@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Fredbear's Pizza{% endblock %}</title>
+    <link rel="icon" type="svg" href="{{ url_for('static', filename='pizza_icon.svg') }}">
+    <link rel="stylesheet" href="static/style.css">
+</head>
+
+<body>
+    <header>
+        <nav class="main-nav">
+            <a class="logo-nav-button" href="/">
+                <h1>Fredbear Pizza</h1>
+                <img src="{{ url_for('static', filename='pizza_icon.svg') }}" width="65" height="65">
+            </a>
+            <p>приходи... мы тебя ждали! 👀</p>
+            <ul>
+                <li><a href="/menu">Меню</a></li>
+                <li><a href="/support">Чат-бот</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <nav class="main-foot">
+            <div class="footer-content">
+                <a href="/" class="logo-nav-button">
+                    <img src="{{ url_for('static', filename='pizza_icon.svg') }}" width="65" height="65">
+                    <h1>Fredbear Pizza</h1>
+                </a>
+                <p>by @ttog_cttugamu</p>
+            </div>
+            <button class="telegram-button">
+                <img src="{{ url_for('static', filename='telegram.png') }}" alt="Telegram" class="telegram-icon">
+            </button>
+            
+        </nav>
+    </footer>
+</body>
+</html>
