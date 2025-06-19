@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{% block title %}Кошик{% endblock %}
+
+{% block content %}
+<style>
+.cart-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.cart-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #2d2d2d;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 20px;
+}
+
+.cart-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.cart-quantity {
+    margin-top: 5px;
+    color: #777;
+}
+
+.cart-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #f39c12;
+    min-width: 100px;
+    text-align: right;
+}
+
+.cart-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.cart-actions button {
+    background: #f39c12;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s ease;
+}
+
+.cart-actions button:hover {
+    background: #d78b0e;
+}
+
+.total {
+    text-align: right;
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 30px;
+    color: #2d2d2d;
+}
+
+.checkout-btn {
+    display: block;
+    margin: 30px auto 0;
+    padding: 12px 24px;
+    font-size: 18px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.checkout-btn:hover {
+    background-color: #219150;
+}
+
+.clear-cart-btn {
+    margin-left: 15px;
+    padding: 4px 10px;
+    font-size: 14px;
+    background-color: #ff5c5c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.clear-cart-btn:hover {
+    background-color: #e04b4b;
+}
+
+</style>
+
+<div class="cart-container">
+    <div class="cart-title">Ваш кошик</div>
+
+    {% if cart %}
+        {% for item in cart %}
+            <div class="cart-item">
+                <img src="{{ url_for('static', filename='menu/' ~ item.image) }}" alt="{{ item.name }}">
+                <div class="cart-details">
+                    <div class="cart-name">{{ item.name }}</div>
+                    <div class="cart-quantity">Кількість: {{ item.quantity }}</div>
+                </div>
+                <div class="cart-price">{{ item.total_price }} грн</div>
+                <div class="cart-actions">
+                    <button class="cart-btn" data-action="remove" data-name="{{ item.name }}">–</button>
+                    <button class="cart-btn" data-action="add" data-name="{{ item.name }}">+</button>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="total">Загальна сума: {{ total_price }} грн</div>
+
+        <!-- Кнопки оформлення та очищення -->
+        <div style="display: flex; justify-content: center; gap: 15px; margin-top: 20px;">
+            <form action="/order_form" method="GET">
+                <button class="checkout-btn" type="submit">Оформити замовлення</button>
+            </form>
+            <form action="/clear_cart" method="POST">
+                <button class="checkout-btn" type="submit" style="background-color: #e74c3c;">Очистити</button>
+            </form>
+        </div>
+
+    {% else %}
+        <p style="text-align: center; color: #777;">Ваш кошик порожній 😢</p>
+    {% endif %}
+</div>
+
+<script>
+document.querySelectorAll('.cart-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const name = this.dataset.name;
+        const action = this.dataset.action;
+
+        fetch(`/${action}_from_cart_ajax`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: name })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Обнови корзину (можно перерисовать или перезагрузить часть DOM)
+                location.reload(); // Временно просто перезагружаем — позже можно будет заменить на динамическое обновление
+            } else {
+                alert(data.error || 'Помилка!');
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

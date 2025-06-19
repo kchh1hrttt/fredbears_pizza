@@ -4,21 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Fredbear's Pizza{% endblock %}</title>
-    <link rel="icon" type="svg" href="{{ url_for('static', filename='pizza_icon.svg') }}">
-    <link rel="stylesheet" href="static/style.css">
+    <link rel="icon" type="svg" href="{{ url_for('static', filename='icons/pizza.svg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
     <header>
         <nav class="main-nav">
             <a class="logo-nav-button" href="/">
-                <h1>Fredbear Pizza</h1>
-                <img src="{{ url_for('static', filename='pizza_icon.svg') }}" width="65" height="65">
+                <h1>Fredbear's Pizza</h1>
+                <img src="{{ url_for('static', filename='icons/pizza.svg') }}" width="65" height="65">
             </a>
-            <p>приходи... мы тебя ждали! 👀</p>
+            <p>приходь... ми на тебе чекали! 👀</p>
             <ul>
                 <li><a href="/menu">Меню</a></li>
                 <li><a href="/support">Чат-бот</a></li>
+                <li><a href="/profile">Профіль</a></li>
+                <li>
+                    <a href="/cart" class="cart-link">
+                        <div class="cart-icon-wrapper">
+                            <img src="{{ url_for('static', filename='icons/cart2.svg') }}" alt="Кошик" class="cart-icon">
+                            <span id="cart-count" class="cart-count">0</span>
+                        </div>
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
@@ -31,16 +40,41 @@
         <nav class="main-foot">
             <div class="footer-content">
                 <a href="/" class="logo-nav-button">
-                    <img src="{{ url_for('static', filename='pizza_icon.svg') }}" width="65" height="65">
-                    <h1>Fredbear Pizza</h1>
+                    <img src="{{ url_for('static', filename='icons/pizza.svg') }}" width="65" height="65">
+                    <h1>Fredbear's Pizza</h1>
                 </a>
-                <p>by @ttog_cttugamu</p>
+                <p>by Alex L</p>
             </div>
-            <button class="telegram-button">
-                <img src="{{ url_for('static', filename='telegram.png') }}" alt="Telegram" class="telegram-icon">
-            </button>
-            
+            <div class="social-buttons">
+                <a href="https://t.me/ttog_cttugamu" target="_blank" class="social-button-link">
+                    <button class="social-button telegram-style">
+                        <img src="{{ url_for('static', filename='icons/telegram.svg') }}" alt="Telegram" class="social-button-icon">
+                    </button>
+                </a>
+                <a href="https://iek.irpin.com/" target="_blank" class="social-button-link">
+                    <button class="social-button nubip-style">
+                        <img src="{{ url_for('static', filename='icons/nubip.svg') }}" alt="ІФК НУБІП" class="social-button-icon">
+                    </button>
+                </a>
+                <a href="https://github.com/kchh1hrttt/fredbears_pizza" target="_blank" class="social-button-link">
+                    <button class="social-button github-style">
+                        <img src="{{ url_for('static', filename='icons/github.svg') }}" alt="GitHub" class="social-button-icon">
+                    </button>
+                </a>
+            </div>
         </nav>
     </footer>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    fetch('/get_cart_count')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('cart-count').textContent = data.cart_count;
+      });
+  });
+</script>
+
+
 </body>
 </html>

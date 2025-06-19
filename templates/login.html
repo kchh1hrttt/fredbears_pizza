@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form class="styled-form" method="POST" action="/login">
+  <h2>Вхід</h2>
+  
+  <label for="username-login">Логін</label>
+  <input id="username-login" name="username" placeholder="Логін" required>
+  
+  <label for="password-login">Пароль</label>
+  <input id="password-login" type="password" name="password" placeholder="Пароль" required>
+  
+  <button type="submit">Увійти</button>
+</form>
+<li><a href="/register">Немає профілю?</a></li>
+{% endblock %}

@@ -5,97 +5,268 @@
 {% block content %}
 
 <style>
-    /* Основной контейнер для всех блоков меню */
-.menu-block {
+  .menu-toggle-wrapper {
     display: flex;
-    flex-wrap: wrap; /* Автоматический перенос элементов */
-    gap: 20px;
-    justify-content: center; /* Центрируем блоки по горизонтали */
-    margin: 20px;
-}
+    justify-content: center;
+    margin-top: 30px;
+  }
 
-/* Каждый блок с пиццей */
-.item {
+  .menu-toggle {
+    position: relative;
     display: flex;
-    flex-direction: column; /* Элементы внутри блока будут располагаться по вертикали */
-    align-items: center; /* Центрируем все элементы по горизонтали */
-    background-color: #f5f5f5; /* Светлый фон */
-    width: 480px; /* Уменьшаем ширину блока */
-    height: auto; /* Высота будет зависеть от содержимого */
-    border: 2px solid #ddd; /* Легкая граница */
-    border-radius: 10px; /* Закругленные углы */
-    padding: 15px;
-    box-sizing: border-box; /* Чтобы padding не увеличивал размер блока */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Тень для создания объема */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавные эффекты при наведении */
-}
-
-/* Эффект при наведении на блок */
-.item:hover {
-    transform: translateY(-5px); /* Поднимаем блок при наведении */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Усиливаем тень при наведении */
-    cursor: pointer;
-}
-
-/* Блок для изображения */
-.item-image {
-    width: 100%;
-    height: 200px; /* Фиксированная высота для изображения */
+    width: 360px; /* фиксированная ширина, чтоб подсветка точна */
+    border: 2px solid #f39c12;
+    border-radius: 12px;
+    background-color: white;
     overflow: hidden;
-    margin-bottom: 15px; /* Отступ между изображением и текстом */
-    border-radius: 10px; /* Закругленные углы изображения */
-}
+    user-select: none;
+  }
 
-.item-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Обрезаем изображение, чтобы оно не выходило за пределы */
-}
-
-/* Стиль для текста */
-.item-name, .item-description, .item-price {
-    text-align: center; /* Центрируем текст */
-    margin-bottom: 10px; /* Отступ между текстовыми блоками */
-    font-family: 'Arial', sans-serif;
-    color: #333; /* Темно-серый цвет текста */
-}
-
-/* Специальное оформление для названия пиццы */
-.item-name {
-    font-size: 20px;
-    font-weight: bold; /* Сделаем название пиццы жирным */
-    color: #2d2d2d; /* Более темный цвет для названия */
-}
-
-/* Описание и цена пиццы */
-.item-description {
-    font-size: 14px;
-    color: #777; /* Светло-серый цвет для описания */
-}
-
-/* Стиль для цены */
-.item-price {
+  .menu-toggle button {
+    flex: 1;
+    border: none;
+    background: none;
+    cursor: pointer;
     font-size: 18px;
     font-weight: bold;
-    color: #f39c12; /* Золотистый цвет для цены */
-}
- 
-    
+    color: #333;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    transition: color 0.3s ease;
+  }
+
+  .menu-toggle button:hover:not(.active) {
+    color: #f39c12;
+  }
+
+  .menu-toggle button.active {
+    color: white;
+  }
+
+  .menu-toggle::before {
+    content: "";
+    position: absolute;
+    top: 2px; bottom: 2px; /* чтобы не перекрывать рамку */
+    width: calc(100% / 3);
+    background-color: #f39c12;
+    border-radius: 10px;
+    z-index: 1;
+    transition: transform 0.3s ease;
+    transform: translateX(0);
+  }
+
+  /* Чтобы подсветка сдвигалась по индексам */
+  .menu-toggle[data-active="0"]::before {
+    transform: translateX(0%);
+  }
+  .menu-toggle[data-active="1"]::before {
+    transform: translateX(100%);
+  }
+  .menu-toggle[data-active="2"]::before {
+    transform: translateX(200%);
+  }
+
+  /* Меню и остальное без изменений */
+  .menu-block {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin: 20px;
+  }
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f5f5f5;
+    width: 480px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    cursor: pointer;
+  }
+
+  .item-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    border-radius: 10px;
+  }
+
+  .item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .item-name, .item-description, .item-price {
+    text-align: center;
+    margin-bottom: 10px;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+  }
+
+  .item-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2d2d2d;
+  }
+
+  .item-description {
+    font-size: 14px;
+    color: #777;
+  }
+
+  .item-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #f39c12;
+  }
+
+  .menu-block.hidden {
+    display: none;
+  }
 </style>
 
-<div class="menu-block">
-{% for pizza in pizzas %}
-    <div class="item" onclick="window.location.href='/add_to_cart/Пицца Маргарита'">
-        <div class="item-name">{{pizza.name}}</div>
-        <div class="item-description">{{pizza.description}}</div>
-        <div class="item-price">{{pizza.price}}</div>
-        <div class="image-container">
-            <div class="item-image">
-                <img src="{{ url_for('static', filename=pizza.image) }}">
-            </div>
-        </div>
-    </div>
-{% endfor %}
+<div class="menu-toggle-wrapper">
+  <div class="menu-toggle" id="menu-tabs" data-active="0">
+    <button id="pizza-btn" class="active" onclick="showMenu('pizza', 0)">Піца</button>
+    <button id="drink-btn" onclick="showMenu('drink', 1)">Напої</button>
+    <button id="sweet-btn" onclick="showMenu('sweet', 2)">Десерти</button>
+  </div>
 </div>
+
+<div class="menu-block" id="pizza-menu">
+  {% for pizza in pizzas %}
+  <div class="item" onclick="addToCart(event, '{{ pizza.name }}', '{{ url_for('static', filename='menu/' ~ pizza.image) }}')">
+    <div class="item-name">{{ pizza.name }}</div>
+    <div class="item-description">{{ pizza.description }}</div>
+    <div class="item-price">{{ pizza.price }}</div>
+    <div class="image-container">
+      <div class="item-image">
+        <img src="{{ url_for('static', filename='menu/' ~ pizza.image) }}">
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="menu-block hidden" id="drink-menu">
+    {% for drink in drinks %}
+  <div class="item" onclick="addToCart(event, '{{ drink.name }}', '{{ url_for('static', filename='menu/' ~ drink.image) }}')">
+    <div class="item-name">{{ drink.name }}</div>
+    <div class="item-description">{{ drink.description }}</div>
+    <div class="item-price">{{ drink.price }}</div>
+    <div class="image-container">
+      <div class="item-image">
+        <img src="{{ url_for('static', filename='menu/' ~ drink.image) }}">
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="menu-block hidden" id="sweet-menu">
+    {% for sweet in sweets %}
+  <div class="item" onclick="addToCart(event, '{{ sweet.name }}', '{{ url_for('static', filename='menu/' ~ sweet.image) }}')">
+    <div class="item-name">{{ sweet.name }}</div>
+    <div class="item-description">{{ sweet.description }}</div>
+    <div class="item-price">{{ sweet.price }}</div>
+    <div class="image-container">
+      <div class="item-image">
+        <img src="{{ url_for('static', filename='menu/' ~ sweet.image) }}">
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<script>
+function showMenu(type, index) {
+  const types = ['pizza', 'drink', 'sweet'];
+  types.forEach(t => {
+    document.getElementById(`${t}-menu`).classList.add('hidden');
+    document.getElementById(`${t}-btn`).classList.remove('active');
+  });
+  document.getElementById(`${type}-menu`).classList.remove('hidden');
+  const activeBtn = document.getElementById(`${type}-btn`);
+  activeBtn.classList.add('active');
+
+  const tabs = document.getElementById('menu-tabs');
+  tabs.setAttribute('data-active', index);
+}
+</script>
+<script>
+async function addToCart(event, itemName, imageUrl) {
+  event.stopPropagation();
+
+  const img = document.createElement('img');
+  img.src = imageUrl;
+  img.style.position = 'fixed';
+  img.style.width = '80px';
+  img.style.height = '80px';
+  img.style.borderRadius = '10px';
+  img.style.zIndex = 1000;
+
+  const rect = event.currentTarget.querySelector('img').getBoundingClientRect();
+  img.style.left = rect.left + 'px';
+  img.style.top = rect.top + 'px';
+
+  document.body.appendChild(img);
+
+  const cartIcon = document.querySelector('.cart-icon-wrapper');
+  const cartRect = cartIcon.getBoundingClientRect();
+
+  img.animate([
+    { transform: `translate(0, 0) scale(1)`, opacity: 1 },
+    { transform: `translate(${cartRect.left - rect.left}px, ${cartRect.top - rect.top}px) scale(0.1)`, opacity: 0.5 }
+  ], {
+    duration: 800,
+    easing: 'ease-in-out'
+  });
+
+  setTimeout(() => {
+    document.body.removeChild(img);
+  }, 800);
+
+  const response = await fetch('/add_to_cart_ajax', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: itemName })
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    document.getElementById('cart-count').textContent = data.cart_count;
+  } else {
+    alert('Помилка при додаванні в корзину');
+  }
+}
+</script>
+<script>
+document.getElementById('clear-cart-btn')?.addEventListener('click', () => {
+    fetch('/clear_cart')
+      .then(response => response.text())
+      .then(() => {
+        location.reload(); // Обновляем страницу, чтобы отобразить пустую корзину
+      });
+});
+</script>
+
+
 
 {% endblock %}

@@ -16,16 +16,16 @@
 
 /* Общие стили для шапки и футера */
 header, footer {
-    background-color: #f8f8f8; /* Светлый фон */
-    color: #333; /* Тёмный текст */
+    background-color: #f8f8f8;
+    color: #333;
     padding: 20px 0;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 footer {
-    background-color: #222; /* Тёмный фон для футера */
-    color: #fff; /* Белый текст */
+    background-color: #1a1a1a;
+    color: #fff;
     position: relative;
     bottom: 0;
     width: 100%;
@@ -50,7 +50,7 @@ footer .footer-content img {
 }
 
 footer button {
-    background-color: #19aee7; /* Зеленая кнопка */
+    background-color: #19aee7;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -60,7 +60,7 @@ footer button {
 }
 
 footer button:hover {
-    background-color: #45a049; /* Изменение цвета при наведении */
+    background-color: #45a049;
 }
 
 footer p {
@@ -68,29 +68,65 @@ footer p {
     font-size: 14px;
 }
 
+.social-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    margin-top: -15px;
+    margin-bottom: 5px;
+}
 
-.telegram-button {
-    background-color: #0088cc; /* Цвет фона в стиле Telegram */
+.social-button-link {
+    text-decoration: none;
+}
+
+.social-button {
+    background-color: #0088cc;
     border: none;
-    border-radius: 50%; /* Делает кнопку круглой */
-    padding: 20px; /* Размер кнопки */
+    border-radius: 50%;
+    padding: 17px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: transform 0.3s ease; /* Эффект при наведении */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.telegram-button:hover {
-    transform: scale(1.1); /* Увеличение кнопки при наведении */
+.social-button:hover {
+    transform: scale(1.2);
 }
 
-.telegram-icon {
-    width: 30px; /* Размер иконки */
-    height: 30px; /* Размер иконки */
+.telegram-style {
+    background-color: #4985b6;
+}
+
+.telegram-style:hover {
+    background-color: #7bcbeb;
+}
+
+.github-style {
+    background-color: #696969;
+}
+
+.github-style:hover {
+    background-color: #cccccc;
+}
+
+.nubip-style {
+    background-color: #8a83b8;
+}
+
+.nubip-style:hover {
+    background-color: #dbcef5;
+}
+
+.social-button-icon {
+    width: 30px;
+    height: 30px;
     object-fit: cover;
 }
-
 
 
 /* Логотип с названием */
@@ -129,8 +165,10 @@ ul {
 }
 
 ul li {
-    margin-right: 30px; /* Расстояние между ссылками */
-    position: relative; /* Для добавления подчеркивания */
+    display: flex;
+    align-items: center; /* Это важно для выравнивания */
+    margin-right: 30px;
+    position: relative;
 }
 
 ul li a {
@@ -160,4 +198,104 @@ ul li a::after {
 
 ul li a:hover::after {
     width: 100%; /* При наведении подчеркивание расширяется */
+}
+
+.styled-form {
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 30px 35px;
+  background: linear-gradient(90deg, #5a0002, #3b1e47);
+  border-radius: 25px;
+  box-shadow: 0 5px 12px rgba(90, 0, 2, 0.7);
+  font-family: 'Arial', sans-serif;
+  color: #f8f8f8;
+  box-sizing: border-box;
+}
+
+.styled-form label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #f39c12;
+}
+
+.styled-form input,
+.styled-form select {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 22px;
+  border: 2px solid #5a0002;
+  border-radius: 12px;
+  font-size: 16px;
+  color: #3b1e47;
+  background-color: #f8f8f8;
+  transition: border-color 0.25s ease;
+  box-sizing: border-box;
+}
+
+.styled-form input:focus,
+.styled-form select:focus {
+  border-color: #f39c12;
+  outline: none;
+}
+
+.styled-form button {
+  width: 100%;
+  padding: 14px 0;
+  background-color: #f39c12;
+  border: none;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 20px;
+  color: #3b1e47;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(243, 156, 18, 0.6);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.styled-form button:hover {
+  background-color: #5a0002;
+  color: #f8f8f8;
+}
+
+.styled-form h2 {
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  color: #f39c12;
+  margin-bottom: 25px;
+  font-weight: 700;
+  font-size: 28px;
+}
+
+/* Коризна в шапці*/
+.cart-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-icon {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    vertical-align: middle;
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.cart-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

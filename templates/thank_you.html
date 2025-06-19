@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Дякуємо за замовлення</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #fff7f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .thank-you-container {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 500px;
+    }
+
+    .thank-you-container h1 {
+      font-size: 28px;
+      color: #ff6b00;
+      margin-bottom: 20px;
+    }
+
+    .thank-you-container p {
+      font-size: 18px;
+      color: #444;
+      margin-bottom: 30px;
+    }
+
+    .home-button {
+      background-color: #ff6b00;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .home-button:hover {
+      background-color: #e65c00;
+    }
+  </style>
+</head>
+<body>
+  <div class="thank-you-container">
+    <h1>Дякуємо за замовлення! 🧡</h1>
+    <p>Наш кур’єр вже прямує до вас.<br> Очікуйте протягом <strong>60 хвилин</strong>.</p>
+    <a href="/" class="home-button">Повернутись на головну</a>
+  </div>
+</body>
+</html>

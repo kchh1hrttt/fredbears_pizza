@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Оформлення замовлення{% endblock %}
+
+{% block content %}
+<h2 class="order-title">Оформлення замовлення</h2>
+
+<form id="order-form" class="styled-form" method="POST" action="/order">
+  <h2>Форма замовлення</h2>
+  
+  <label for="order-name">Ім’я</label>
+  <input id="order-name" type="text" name="name" required>
+  
+  <label for="order-address">Адреса доставки</label>
+  <input id="order-address" type="text" name="address" required>
+  
+  <label for="order-phone">Телефон</label>
+  <input id="order-phone" type="text" name="phone" required>
+  
+  <label for="payment_type">Тип оплати</label>
+  <select id="payment_type" name="payment_type" required>
+    <option value="cash">Оплата при доставці</option>
+    <option value="online">Онлайн оплата</option>
+  </select>
+  
+  <button id="order-button" type="submit">Замовити</button>
+  <button id="pay-button" type="button" style="display:none;">Оплатити онлайн</button>
+</form>
+
+<script>
+const paymentSelect = document.getElementById('payment_type');
+const orderButton = document.getElementById('order-button');
+const payButton = document.getElementById('pay-button');
+const form = document.getElementById('order-form');
+
+paymentSelect.addEventListener('change', () => {
+    if (paymentSelect.value === 'online') {
+        orderButton.style.display = 'none';
+        payButton.style.display = 'inline-block';
+    } else {
+        orderButton.style.display = 'inline-block';
+        payButton.style.display = 'none';
+    }
+});
+
+payButton.addEventListener('click', () => {
+    // Імітація оплати
+    alert('Оплата пройшла успішно! Дякуємо за замовлення.');
+    form.submit();
+});
+</script>
+{% endblock %}

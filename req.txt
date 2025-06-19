@@ -1,0 +1,7 @@
+tensorflow>=2.11,<2.13
+tensorflow_hub
+numpy
+scikit-learn
+nltk
+flask
+rapidfuzz

@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% block title %}Оформлення замовлення{% endblock %}
+
+{% block content %}
+
+<!-- Подключаем Lottie -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.2/lottie.min.js"></script>
+
+<style>
+.payment-popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.payment-popup.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.payment-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  width: 320px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  transform: scale(0.9);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.payment-content.popup-animate-in {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.payment-content.popup-animate-out {
+  transform: scale(0.9);
+  opacity: 0;
+}
+
+.payment-content input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f3f3f3;
+}
+
+.hidden {
+  display: none;
+}
+
+.status-text {
+  font-size: 16px;
+  color: #444;
+}
+
+#lottie-container {
+  width: 100px;
+  height: 100px;
+  margin: 20px auto;
+}
+</style>
+
+<h2 class="order-title">Форма замовлення</h2>
+
+<form class="styled-form" method="POST" action="/order_form" id="order-form">
+  <label for="order-name">Ім’я</label>
+  <input id="order-name" type="text" name="name" required value="{{ user.name if user }}">
+
+  <label for="order-address">Адреса доставки</label>
+  <input id="order-address" type="text" name="address" required value="{{ user.address if user }}">
+
+  <label for="order-phone">Телефон</label>
+  <input id="order-phone" type="text" name="phone" required value="{{ user.phone if user }}">
+
+  <label for="payment_type">Тип оплати</label>
+  <select id="payment_type" name="payment_type" required>
+    <option value="cash">Оплата при доставці</option>
+    <option value="online">Онлайн оплата</option>
+  </select>
+
+  <button id="order-button" type="submit">Замовити</button>
+  <button id="pay-button" type="button" style="display:none;" onclick="openPaymentPopup()">Оплатити онлайн</button>
+</form>
+
+<!-- Вікно оплати -->
+<div class="payment-popup" id="payment-popup">
+  <div class="payment-content">
+    <h2>Оплата картою</h2>
+    <form id="fake-payment-form">
+      <input type="text" placeholder="Номер карти" value="4111 1111 1111 1111" disabled>
+      <input type="text" placeholder="MM/YY" value="12/29" disabled>
+      <input type="text" placeholder="CVV" value="123" disabled>
+    </form>
+    <div class="status-area">
+      <div id="lottie-container"></div>
+    </div>
+    <div class="status-text" id="status-text">Обробка платежу...</div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const paymentSelect = document.getElementById('payment_type');
+  const orderButton = document.getElementById('order-button');
+  const payButton = document.getElementById('pay-button');
+
+  function updateButtons() {
+    if (paymentSelect.value === 'online') {
+      orderButton.style.display = 'none';
+      payButton.style.display = 'inline-block';
+    } else {
+      orderButton.style.display = 'inline-block';
+      payButton.style.display = 'none';
+    }
+  }
+
+  paymentSelect.addEventListener('change', updateButtons);
+  updateButtons();
+
+  document.getElementById('payment-popup').addEventListener('click', function(e) {
+    if (e.target === this) closePaymentPopup();
+  });
+});
+
+let lottieInstance;
+
+function openPaymentPopup() {
+  const popup = document.getElementById('payment-popup');
+  const content = popup.querySelector('.payment-content');
+  const lottieContainer = document.getElementById('lottie-container');
+
+  popup.classList.add('visible');
+  content.classList.add('popup-animate-in');
+  document.getElementById('status-text').textContent = 'Обробка платежу...';
+
+  // Ініціалізація анімації
+  if (lottieInstance) {
+    lottieInstance.destroy();
+  }
+
+  lottieInstance = lottie.loadAnimation({
+    container: lottieContainer,
+    renderer: 'svg',
+    loop: false,
+    autoplay: true,
+    path: '/static/lottie/edited_spinner_checkmark.json'  // путь к анимации
+  });
+
+  // Через 7 секунд — редирект
+  setTimeout(() => {
+    document.getElementById('status-text').textContent = 'Оплата пройшла успішно!';
+    setTimeout(() => {
+      closePaymentPopup();
+      document.getElementById('order-form').submit();
+      setTimeout(() => {
+        window.location.href = '/thank_you';
+      }, 400);
+    }, 1000);
+  }, 4000);
+}
+
+function closePaymentPopup() {
+  const popup = document.getElementById('payment-popup');
+  const content = popup.querySelector('.payment-content');
+
+  content.classList.remove('popup-animate-in');
+  content.classList.add('popup-animate-out');
+
+  setTimeout(() => {
+    popup.classList.remove('visible');
+    content.classList.remove('popup-animate-out');
+  }, 300);
+}
+</script>
+
+{% endblock %}

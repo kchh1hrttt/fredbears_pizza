@@ -1,5 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
+<body>
+    <h2>Чат з Fredbear's Pizza 🤖</h2>
+    <input type="text" id="user_input" placeholder="Напиши щось..." />
+    <button onclick="sendMessage()">Надіслати</button>
+    <p id="bot_response"></p>
 
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById("user_input").value;
+            fetch(`/get?msg=${encodeURIComponent(userInput)}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("bot_response").textContent = "🤖 Бот: " + data.response;
+                });
+        }
+    </script>
+</body>
 {% endblock %}

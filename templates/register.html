@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form class="styled-form" method="POST" action="/register">
+  <h2>Реєстрація</h2>
+  
+  <label for="username">Логін</label>
+  <input id="username" name="username" placeholder="Логін" required>
+  
+  <label for="password">Пароль</label>
+  <input id="password" type="password" name="password" placeholder="Пароль" required>
+  
+  <label for="name">Ім’я</label>
+  <input id="name" name="name" placeholder="Ім’я" required>
+  
+  <label for="address">Адреса</label>
+  <input id="address" name="address" placeholder="Адреса" required>
+  
+  <label for="phone">Телефон</label>
+  <input id="phone" name="phone" placeholder="Телефон" required>
+  
+  <button type="submit">Зареєструватися</button>
+</form>
+
+
+{% endblock %}
